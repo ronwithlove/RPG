@@ -5,10 +5,13 @@ public class PlayerDir : MonoBehaviour {
 
 	public GameObject moveEffect;//点击特效
 	public Vector3 movePosition=Vector3.zero;
+
 	private bool isMouseButtonDown=false;
+	private PlayerMove playerMove;
 
 	void Start(){
 		movePosition=transform.position;
+		playerMove=this.GetComponent<PlayerMove>();
 	}
 	
 	void Update () {
@@ -19,12 +22,10 @@ public class PlayerDir : MonoBehaviour {
 			Physics.Raycast(ray, out hitInfo);//光线投射，返回的hitInfo带有射线的信息
 			if(hitInfo.collider.tag==Tags.ground){//从返回的射线信息来判断，如果碰撞的物体是ground
 				showClickEffect(hitInfo.point);//代入射线碰撞的坐标，显示点击效果
-				playerFacing(hitInfo.point);
-
 			}
 		}
 
-		if(isMouseButtonDown==true){//鼠标左键按下一直没有抬起
+		if(isMouseButtonDown){//鼠标左键按下一直没有抬起
 			Ray ray= Camera.main.ScreenPointToRay(Input.mousePosition);//创建一条摄像机到鼠标点的射线
 			RaycastHit hitInfo;//射线信息
 			Physics.Raycast(ray, out hitInfo);//光线投射，返回的hitInfo带有射线的信息
@@ -32,7 +33,13 @@ public class PlayerDir : MonoBehaviour {
 				//showClickEffect(hitInfo.point);//一直按下就不需要不停的显示特效了
 				playerFacing(hitInfo.point);
 			}
+		}else{ //如果鼠标抬起了
+			if(playerMove.isMoving){//鼠标抬起，但是还在移动中就还是要不断的更新向最终位置的朝向，避免被物体碰撞到改变方向。
+				playerFacing(movePosition);
+			}
 		}
+
+
 
 		if(Input.GetMouseButtonUp(0)){//鼠标左键抬起
 			isMouseButtonDown=false;
