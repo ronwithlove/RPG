@@ -19,8 +19,8 @@ public class PlayerDir : MonoBehaviour {
 			isMouseButtonDown=true;
 			Ray ray= Camera.main.ScreenPointToRay(Input.mousePosition);//创建一条摄像机到鼠标点的射线
 			RaycastHit hitInfo;//射线信息
-			Physics.Raycast(ray, out hitInfo);//光线投射，返回的hitInfo带有射线的信息
-			if(hitInfo.collider.tag==Tags.ground){//从返回的射线信息来判断，如果碰撞的物体是ground
+			bool isCollider=Physics.Raycast(ray, out hitInfo);//光线投射，返回的hitInfo带有射线的信息
+			if(isCollider && hitInfo.collider.tag==Tags.ground){//从返回的射线信息来判断，如果碰撞的物体是ground
 				showClickEffect(hitInfo.point);//代入射线碰撞的坐标，显示点击效果
 			}
 		}

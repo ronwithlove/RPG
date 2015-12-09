@@ -9,7 +9,7 @@ public class PlayerAnimation : MonoBehaviour {
 		playerMove=this.GetComponent<PlayerMove>();
 	}
 	
-	// Update is called once per frame
+	//注意这里用的是LateUpdate(),因为在PlayerMove的状态是写在Update()里的，所以这里写LateUpdate()比较好
 	void LateUpdate () {
 		if (playerMove.state==PlayerState.Idle){
 			playAnim("Idle");
