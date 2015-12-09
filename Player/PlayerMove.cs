@@ -1,9 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum PlayerState{
+	Move,
+	Idle
+}
+
 public class PlayerMove : MonoBehaviour {
 	public float speed=4;
 	public bool isMoving= false;
+	public PlayerState state=PlayerState.Idle;
 
 	private PlayerDir playerDir;
 	private CharacterController playerController;
@@ -21,8 +27,11 @@ public class PlayerMove : MonoBehaviour {
 		if(distance>0.1){//这样有个bug,player有时会过了目标点，然后又继续往前进。
 			isMoving=true;
 			playerController.SimpleMove(transform.forward*speed);//注意格式 括号内的是移动方向
+			state=PlayerState.Move;
 		}else{
 			isMoving=false;//这里判断Player是否在移动，PlayerDir会得到这个值，通过他来判断是否要调整Player的朝向
+			state=PlayerState.Idle;
 		}
 	}
 }
+
