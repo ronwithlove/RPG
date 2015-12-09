@@ -4,7 +4,12 @@ using System.Collections;
 public class PlayerDir : MonoBehaviour {
 
 	public GameObject moveEffect;//点击特效
+	public Vector3 movePosition=Vector3.zero;
 	private bool isMouseButtonDown=false;
+
+	void Start(){
+		movePosition=transform.position;
+	}
 	
 	void Update () {
 		if (Input.GetMouseButtonDown(0)){//鼠标按下后执行一次
@@ -32,8 +37,6 @@ public class PlayerDir : MonoBehaviour {
 		if(Input.GetMouseButtonUp(0)){//鼠标左键抬起
 			isMouseButtonDown=false;
 		}
-
-
 	}
 
 	void showClickEffect(Vector3 mousePoint){
@@ -42,8 +45,8 @@ public class PlayerDir : MonoBehaviour {
 	}
 
 	void playerFacing(Vector3 facePoint){
-		Vector3 faceDir=new Vector3(facePoint.x,this.transform.position.y,facePoint.z);//player朝向方向，Y轴保持和player的一致，这样player不会出现"抬头"或"低头"的情况
-		this.transform.LookAt(faceDir);// player 朝向点击的地方
+		movePosition=new Vector3(facePoint.x,this.transform.position.y,facePoint.z);//player朝向方向，Y轴保持和player的一致，这样player不会出现"抬头"或"低头"的情况
+		this.transform.LookAt(movePosition);// player 朝向点击的地方
 	}
 
 }
