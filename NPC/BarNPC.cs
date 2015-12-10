@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BarNPC : MonoBehaviour {
+public class BarNPC : NPC{
 
 	public TweenPosition questTween;
 	public UILabel questLabel;
@@ -19,7 +19,7 @@ public class BarNPC : MonoBehaviour {
 	}
 
 	void OnMouseOver(){//当鼠标移动到这个collider上的时候，每一帧都会检测,不需要写在update里
-		if(Input.GetMouseButton(0)){
+		if(Input.GetMouseButtonDown(0)){
 			ShowQuest ();
 			if (onTask){
 				isOnTask();
