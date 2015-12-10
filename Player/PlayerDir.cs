@@ -15,7 +15,7 @@ public class PlayerDir : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (Input.GetMouseButtonDown(0)){//鼠标按下后执行一次
+		if (Input.GetMouseButtonDown(0)&& UICamera.hoveredObject==null){//鼠标按下后执行一次
 			isMouseButtonDown=true;
 			Ray ray= Camera.main.ScreenPointToRay(Input.mousePosition);//创建一条摄像机到鼠标点的射线
 			RaycastHit hitInfo;//射线信息
