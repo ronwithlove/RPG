@@ -8,6 +8,7 @@ public class GridItem : UIDragDropItem {//继承拖放
 	private UISprite sprite;
 	private InventoryItemGrid grid1;
 	private InventoryItemGrid grid2;
+	private int itemId=0;
 
 
 	void Awake(){
@@ -36,6 +37,7 @@ public class GridItem : UIDragDropItem {//继承拖放
 	public void SetId(int id){
 		ItemInfo info=ItemsInfo._instance.GetItemInfoByID(id);//按照字典里对应的ID找到info
 		sprite.spriteName=info.icon_name;//把sripte的名字改了，就等于换了他的图标样子了。
+		itemId=id;
 	}
 	//下面两个方法应该可以合并，要不ItemToGrid也不用这么麻烦，直接初始一个格子就好。
 	void SwitchGrid(Transform trans1, Transform trans2){
@@ -47,8 +49,8 @@ public class GridItem : UIDragDropItem {//继承拖放
 		int grid2Id=grid2.itemsID;
 		int grid2Count=grid2.itemsCount;
 		
-		grid1.GetComponent<InventoryItemGrid>().SetGridID(grid2Id,grid2Count);
-		grid2.GetComponent<InventoryItemGrid>().SetGridID(grid1Id,grid1Count);
+		grid1.SetGridID(grid2Id,grid2Count);
+		grid2.SetGridID(grid1Id,grid1Count);
 	}
 
 	void ItemToGrid(Transform trans1, Transform trans2){
@@ -60,10 +62,16 @@ public class GridItem : UIDragDropItem {//继承拖放
 		int grid2Id=grid2.itemsID;
 		int grid2Count=grid2.itemsCount;
 		
-		grid1.GetComponent<InventoryItemGrid>().SetGridID(grid2Id,grid2Count);
-		grid2.GetComponent<InventoryItemGrid>().SetGridID(grid1Id,grid1Count);
+		grid1.SetGridID(grid2Id,grid2Count);
+		grid2.SetGridID(grid1Id,grid1Count);
 	}
 
+	public void OnHoverOver(){
+		ItemDescription._instance.ShowDes(itemId);
+	}
+	public void OnHoverOut(){
+		ItemDescription._instance.HideDes();
+	}
 
 }
 

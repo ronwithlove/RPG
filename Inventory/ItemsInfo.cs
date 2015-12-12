@@ -56,7 +56,7 @@ public class ItemsInfo : MonoBehaviour {
 			string str_type=partArray[3];
 			switch(str_type){
 			case "Drug": info.type=ItemType.Drug;break;//当得到的 str_type=Drug时,  info.type=ItemType.Drug。就不会有错了
-			case "Equp": info.type=ItemType.Equip;break;
+			case "Equip": info.type=ItemType.Equip;break;
 			case "Mat": info.type=ItemType.Mat;break; 
 			default:info.type=ItemType.Drug;break;//默认写着把。。。
 			}

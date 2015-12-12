@@ -11,9 +11,7 @@ public class InventoryItemGrid : MonoBehaviour {
 
 	void Awake(){
 		itemCountLabel=this.GetComponentInChildren<UILabel>();
-
 	}
-
 
 	public void GridPlusItem(int id, int count=1){//默认数量1
 		itemsID=id;
