@@ -30,7 +30,7 @@ public class ItemsInfo : MonoBehaviour {
 	void Awake(){
 		_instance=this;
 		ReadItemsInfo();//通过读取本文内容，把他们加到字典中
-		print (ItemInfoDict.Keys.Count);//测试下看看字典中有几个元素
+//		print (ItemInfoDict.Keys.Count);//测试下看看字典中有几个元素
 	}
 
 	public ItemInfo GetItemInfoByID(int id){// 写一个方法，通过用字典查找id来返回一个对应的ItemInfo
