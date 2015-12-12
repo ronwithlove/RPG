@@ -15,11 +15,20 @@ public class InventoryItemGrid : MonoBehaviour {
 	}
 
 
-	public void SetGridID(int id, int count=1){
+	public void GridPlusItem(int id, int count=1){//默认数量1
+		itemsID=id;
+		itemsCount=itemsCount+count;
+		itemCountLabel.text=""+itemsCount;
+		}
+
+	public void SetGridID(int id, int count=0){//默认数量0
 		itemsID=id;
 		itemsCount=count;
-		itemCountLabel.text=""+count;
+		if(itemsCount==0){
+			itemCountLabel.text="";
+		}else{
+			itemCountLabel.text=""+count;
+		}
 	}
 
-
-}
+	}

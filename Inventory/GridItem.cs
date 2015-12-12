@@ -6,7 +6,8 @@ using System.Collections;
 public class GridItem : UIDragDropItem {//继承拖放
 
 	private UISprite sprite;
-	private InventoryItemGrid grid;
+	private InventoryItemGrid grid1;
+	private InventoryItemGrid grid2;
 
 
 	void Awake(){
@@ -15,19 +16,19 @@ public class GridItem : UIDragDropItem {//继承拖放
 	protected override void OnDragDropRelease(GameObject surface){//surface就是被拖动物品碰撞上的那个物品
 		base.OnDragDropRelease(surface);
 
-		//物体会自动放到格子中间
-		if(surface.tag==Tags.inventory_grid){
-			this.transform.parent=surface.transform;
-			this.transform.localPosition=Vector3.zero;
-			//grid=this.transform.parent.gameObject;
+		if(surface.tag==Tags.inventory_grid){//如果是空的格子
+			ItemToGrid(this.transform, surface.transform);//把原来格子的信息放到新的格子去
 
-		}else if(surface.tag==Tags.inventory_item){//如果格子中已经有物品，交换物品
-			Transform parent =surface.transform.parent;//保存已经物品的parent
-			surface.transform.parent=this.transform.parent;//把已有物品移动到我拖动的物品父类下
-			surface.transform.localPosition=Vector3.zero;//放放好。。放格子中间
-			
-			this.transform.parent=parent;//我拖动的物品放到已有物品的位置。
-			this.transform.localPosition=Vector3.zero;//放放好。。
+			this.transform.parent=surface.transform;//物品放置
+			this.transform.localPosition=Vector3.zero;
+		}else if(surface.tag==Tags.inventory_item){//如果格子中已经有物品，物品位置交换,把Grid1中的A和Grid2中的B交换
+			SwitchGrid(this.transform, surface.transform);//两个格子交换一下
+
+			Transform parent =surface.transform.parent;//保存Grid2位置
+			surface.transform.parent=this.transform.parent;//把B移到Grid1中
+			surface.transform.localPosition=Vector3.zero;//把B放在格子Grid1的中间
+			this.transform.parent=parent;//把A物品放到Grid2中
+			this.transform.localPosition=Vector3.zero;//把A放在格子Grid2中间
 		}
 
 	}
@@ -36,10 +37,36 @@ public class GridItem : UIDragDropItem {//继承拖放
 		ItemInfo info=ItemsInfo._instance.GetItemInfoByID(id);//按照字典里对应的ID找到info
 		sprite.spriteName=info.icon_name;//把sripte的名字改了，就等于换了他的图标样子了。
 	}
+	//下面两个方法应该可以合并，要不ItemToGrid也不用这么麻烦，直接初始一个格子就好。
+	void SwitchGrid(Transform trans1, Transform trans2){
+		grid1=trans1.parent.gameObject.GetComponent<InventoryItemGrid>();
+		int grid1Id=grid1.itemsID;
+		int grid1Count=grid1.itemsCount;
 
+		grid2=trans2.parent.gameObject.GetComponent<InventoryItemGrid>();
+		int grid2Id=grid2.itemsID;
+		int grid2Count=grid2.itemsCount;
+		
+		grid1.GetComponent<InventoryItemGrid>().SetGridID(grid2Id,grid2Count);
+		grid2.GetComponent<InventoryItemGrid>().SetGridID(grid1Id,grid1Count);
+	}
+
+	void ItemToGrid(Transform trans1, Transform trans2){
+		grid1=trans1.parent.gameObject.GetComponent<InventoryItemGrid>();
+		int grid1Id=grid1.itemsID;
+		int grid1Count=grid1.itemsCount;
+		
+		grid2=trans2.gameObject.GetComponent<InventoryItemGrid>();//这里没有parent 唯一的区别
+		int grid2Id=grid2.itemsID;
+		int grid2Count=grid2.itemsCount;
+		
+		grid1.GetComponent<InventoryItemGrid>().SetGridID(grid2Id,grid2Count);
+		grid2.GetComponent<InventoryItemGrid>().SetGridID(grid1Id,grid1Count);
+	}
 
 
 }
 
+//限定物品移动范围，超过包包就提示扔掉，在包包内，但是不在格子上的时候放掉鼠标返回原来的格子
 //还需要增加，在拖动物品时候，把他的Layer放到最上面。
 //物品分拆慢点写
