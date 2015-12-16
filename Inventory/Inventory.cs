@@ -13,9 +13,13 @@ public class Inventory : MonoBehaviour {
 
 	private InventoryItemGrid invGridItem;
 	private TweenPosition inventoryTween;//可以不声明直接在show,hide方法中用this.getcompent，但是还是在awake()先获得比较好，用来打开和关掉包包
+	private bool isBagOpen=false;
+
 	void Awake(){
 		_instance=this;
 		inventoryTween=this.GetComponent<TweenPosition>();	
+		inventoryTween.gameObject.SetActive(false);
+
 	}
 
 	// Update is called once per frame
@@ -69,12 +73,15 @@ public class Inventory : MonoBehaviour {
 	}
 
 	//背包打开关闭动画
-	public void ShowInventory(){
-		inventoryTween.PlayForward();
-	}
-
-	public void HideInventory(){
-		inventoryTween.PlayReverse();
+	public void BagShowHide(){
+		if(isBagOpen){
+			isBagOpen=false;
+			inventoryTween.PlayReverse();
+		}else{
+			isBagOpen=true;
+			inventoryTween.gameObject.SetActive(true);
+			inventoryTween.PlayForward();
+		}
 	}
 
 }

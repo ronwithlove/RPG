@@ -3,7 +3,6 @@ using System.Collections;
 
 public class FunctionBar : MonoBehaviour {
 
-	public TweenPosition inventoryTween;
 	private bool isBagOpen=false;
 
 
@@ -11,7 +10,7 @@ public class FunctionBar : MonoBehaviour {
 
 	}
 	public void OnStatusBtnClick(){
-		
+		Status._instance.StatusShowHide();
 	}
 	public void OnSkillBtnClick(){
 		
@@ -20,14 +19,7 @@ public class FunctionBar : MonoBehaviour {
 		
 	}
 	public void OnBagBtnClick(){
-		if(isBagOpen){
-			isBagOpen=false;
-			Inventory._instance.HideInventory();
-		}else{
-			isBagOpen=true;
-			inventoryTween.gameObject.SetActive(true);
-		Inventory._instance.ShowInventory();
-		}
+		Inventory._instance.BagShowHide();
 	}
 
 
