@@ -14,11 +14,13 @@ public class Inventory : MonoBehaviour {
 	private InventoryItemGrid invGridItem;
 	private TweenPosition inventoryTween;//可以不声明直接在show,hide方法中用this.getcompent，但是还是在awake()先获得比较好，用来打开和关掉包包
 	private bool isBagOpen=false;
+	private int coin=1000;
 
 	void Awake(){
 		_instance=this;
 		inventoryTween=this.GetComponent<TweenPosition>();	
 		inventoryTween.gameObject.SetActive(false);
+		coinNumber.text=""+coin;
 
 	}
 
@@ -33,22 +35,18 @@ public class Inventory : MonoBehaviour {
 		}
 	}
 
-	void PickItems(int id){
+	public void PickItems(int id, int itemCount=1){
 		//1.查找捡起物品在包里是不是已经有了
 		//Yes,如果有了，叠加
 		//No,如果没有，找空格子放，如果没有空格子，就不让放。
-		//InventoryItemGrid grid= null;
 		int gridIndex=1000;//格子的index 0-19,初始1000
 		int firstBlankGridIdex=1000;//初始化用1000，包包共有20个格子，index在0-19
 		foreach(InventoryItemGrid temp in itemGridList){//遍历所有的格子,这里的itemGridList已经含有手动绑定上的20个格子了。
 			//在遍历所有格子的时候，顺便检查有没有空的格子
 			if(firstBlankGridIdex==1000 && temp.itemsID==0){//当firstBlankGridIdex还没被赋值的时候，这样他就被赋值一次，也就是记录第一个空格子的index
 				firstBlankGridIdex=itemGridList.IndexOf(temp);
-				print ("firstBlankGridIdex"+firstBlankGridIdex);
 			}
 			if(temp.itemsID==id){ //和格子的ID去比，格子的ID就是1001，1002也是在他里面物体的ID，如果ID一样
-				//grid= temp;break;//获得这个格子
-				print (itemGridList.IndexOf(temp));
 				gridIndex=itemGridList.IndexOf(temp);break;//获得相同包包的Index
 				//最好在这里里边的时候看，要么拿到一样的BREAK，要么获得第一个空的GRID，他是第几个itemgridlist[?],下面就可以直接放了
 			}
@@ -58,7 +56,7 @@ public class Inventory : MonoBehaviour {
 			if(firstBlankGridIdex!=1000){//不等于1000，说明有空的格子了，就放到这个格子下，
 				GameObject newItemGo= NGUITools.AddChild(itemGridList[firstBlankGridIdex].gameObject,gridItem); //就去创建这个捡起的物品	// 注意这个格式，这个意思就是添加一个子物件，那在这里相当于把物品放到格子里，第一个参数是父，第二个是子
 				newItemGo.transform.localPosition=Vector3.zero;
-				itemGridList[firstBlankGridIdex].GridPlusItem(id);//把捡到物品的ID赋给空的格子（InventoryItemGrid）,数量先不写，为空就是默认1。
+				itemGridList[firstBlankGridIdex].GridPlusItem(id,itemCount);//把捡到物品的ID赋给空的格子（InventoryItemGrid）,数量先不写，为空就是默认1。
 				//把这个物品ID通过GridItem里的SETID方法给到GRID
 				newItemGo.transform.GetComponent<GridItem>().SetId(id);//通过用GetCompont方法获取newItemGo的物件GridItem,然后再用GridItem中的SetId方法，来改变Sprite名字，从而达到改变图标。
 			}else{
@@ -67,7 +65,7 @@ public class Inventory : MonoBehaviour {
 
 		}else{// gridIndex不为0，有找到相同的物品，叠加
 			invGridItem=itemGridList[gridIndex];//把这个格子给到gridItemGo
-			invGridItem.GridPlusItem(id,1);//这里id又赋予了一次，其实之前已经检查过是一样的。
+			invGridItem.GridPlusItem(id,itemCount);//这里id又赋予了一次，其实之前已经检查过是一样的。
 		}//if(gridIndex==0)结束
 
 	}
@@ -81,6 +79,17 @@ public class Inventory : MonoBehaviour {
 			isBagOpen=true;
 			inventoryTween.gameObject.SetActive(true);
 			inventoryTween.PlayForward();
+		}
+	}
+
+	//买东西
+	public bool BuyStaff( int price){
+		if (price<=coin){
+			coin-=price;
+			coinNumber.text=""+coin;
+			return true;//扣款成功，哈哈
+		}else{
+			return false;
 		}
 	}
 

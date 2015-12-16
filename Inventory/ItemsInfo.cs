@@ -7,6 +7,20 @@ public enum ItemType{ //物品种类
 	Equip,
 	Mat    //材料
 }
+public enum EquipType{
+	Headgear,
+	Armor,
+	RightHand,
+	LeftHand,
+	Shoe,
+	Accessory
+}
+
+public enum ClassType{
+	Swordman,//剑士
+	Magician,//法师
+	Common //通用
+}
 
 //这里都用了一个类，之后去完善，把不同种类的属性分开，比如装备，材料是不会回血回魔的
 public class ItemInfo {//这个类不是 ItemsInfo，在 Item后少了个s哦。
@@ -18,7 +32,12 @@ public class ItemInfo {//这个类不是 ItemsInfo，在 Item后少了个s哦。
 	public int mp;		//回魔值
 	public int price_sell;	//出售价
 	public int price_buy;	//购买价
-	
+
+	public int strength;
+	public int defence;
+	public int speed;
+	public EquipType equipType;
+	public ClassType classType;
 }
 
 public class ItemsInfo : MonoBehaviour {
@@ -66,6 +85,29 @@ public class ItemsInfo : MonoBehaviour {
 				info.mp= int.Parse(partArray[5]);
 				info.price_sell=int.Parse(partArray[6]);
 				info.price_buy=int.Parse(partArray[7]);
+			}else if(info.type==ItemType.Equip){
+				info.strength=int.Parse(partArray[4]);
+				info.defence=int.Parse (partArray[5]);
+				info.speed=int.Parse (partArray[6]);
+				info.price_sell=int.Parse(partArray[9]);
+				info.price_buy=int.Parse (partArray[10]);
+				string str_equipType=partArray[7];
+				switch(str_equipType){
+					case "Headgear":info.equipType=EquipType.Headgear;break;
+					case "Armor":info.equipType=EquipType.Armor;break;
+					case "RightHand":info.equipType=EquipType.RightHand;break;
+					case "LeftHand":info.equipType=EquipType.LeftHand;break;
+					case "Shoe":info.equipType=EquipType.Shoe;break;
+					case "Accessory":info.equipType=EquipType.Accessory;break;
+				}
+				string str_classType=partArray[8];
+				switch(str_classType){
+				case "Swordman":info.classType=ClassType.Swordman;break;
+				case "Magician":info.classType=ClassType.Magician;break;
+				case"Common":info.classType=ClassType.Common;break;
+				}
+
+
 			}
 			ItemInfoDict.Add (info.id,info);//最后把这个info加入字典，这里字典的id就用文本里的ID就可以了
 		}//foreach结束

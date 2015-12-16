@@ -18,7 +18,7 @@ public class ItemDescription : MonoBehaviour {
 
 	public void ShowDes(int itemId){
 		this.gameObject.SetActive(true);
-		transform.position=UICamera.currentCamera.ScreenToWorldPoint(Input.mousePosition);
+		transform.position=UICamera.currentCamera.ScreenToWorldPoint(Input.mousePosition);//最好物品描述显示在这个物品格子的右下角再过去一点，这样不会被鼠标挡住
 		info=ItemsInfo._instance.GetItemInfoByID(itemId);
 		switch(info.type){//注意类型用的是枚举，所以注意case后面的类型，不是string哦
 		case  ItemType.Drug: ShowDrugDes();break; 

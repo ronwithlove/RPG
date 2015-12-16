@@ -3,9 +3,6 @@ using System.Collections;
 
 public class FunctionBar : MonoBehaviour {
 
-	private bool isBagOpen=false;
-
-
 	public void OnSettingBtnClick(){
 
 	}
@@ -16,7 +13,7 @@ public class FunctionBar : MonoBehaviour {
 		
 	}
 	public void OnEquipBtnClick(){
-		
+		EquipmentUI._instance.EquipmentShowHide();
 	}
 	public void OnBagBtnClick(){
 		Inventory._instance.BagShowHide();
