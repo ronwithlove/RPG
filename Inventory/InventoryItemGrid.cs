@@ -26,7 +26,7 @@ public class InventoryItemGrid : MonoBehaviour {
 		}
 	}
 
-	public void SetGridID(int id, int count=0){//默认数量0  把Grid直接设置成某个物品，和他的数量
+	public void SetGridID(int id, int count=0){//默认数量0  直接把Grid设置成某个物品，和他的数量,当如数为0,0就是初始化了
 		itemsID=id;
 		itemsCount=count;
 		if(itemsCount==0){

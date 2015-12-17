@@ -28,9 +28,6 @@ public class EquipmentUI : MonoBehaviour {
 		shoeGo=this.transform.Find ("Shoe").gameObject;
 		accessoryGo=this.transform.Find("Accessory").gameObject;
 		playerStatus=GameObject.FindGameObjectWithTag(Tags.player).GetComponent<PlayerStatus>();
-		print (equipItem);
-		print (equipItem);
-
 	}
 
 	//装备物品
@@ -60,20 +57,16 @@ public class EquipmentUI : MonoBehaviour {
 			case EquipType.Accessory:parent=accessoryGo;break;
 		}//得到装备类型的，这个装备是属于哪个部位的。
 		EquipmentItem item=parent.GetComponentInChildren<EquipmentItem>();//取这个部位下的子物件，赋值给item,如果是空的，就说明这个部位的装备还没东西（用.transform.childCount也行）
-		if(item==null){
-			//说明这个部位上还没装备物品
+		if(item==null){//说明这个部位上还没装备物品
 			GameObject newItemGo= NGUITools.AddChild(parent,equipItem); //创建物品，就是添加一个子物件，那在这里相当于把物品放到格子里，第一个参数是父，第二个是子
 			newItemGo.transform.localPosition=Vector3.zero;
-			newItemGo.transform.GetComponent<EquipmentItem>().SetId(info.id);
+			newItemGo.transform.GetComponent<EquipmentItem>().SetId(info.id);//改图标
 		}else{//已经有物品了，更换物品
 			int equipeditemID=item.GetComponent<EquipmentItem>().itemId;
 			Inventory._instance.PickItems(equipeditemID,1);//在包里添加同样id的物件
 			item.GetComponent<EquipmentItem>().SetId(info.id);//把原来的物件改成装备上去的
-			//再从包里减去装备上的物件就OK了。
-
+			//再从包里减去装备上的物件就OK了。这个放在GirdItem去做
 		}
-
-
 
 		return true;
 	}
