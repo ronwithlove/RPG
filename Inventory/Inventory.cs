@@ -27,7 +27,8 @@ public class Inventory : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Input.GetKeyDown (KeyCode.X)){
-			int reNo=Random.Range (1001,1004);
+			int reNo=Random.Range (2001,2023);
+			//int reNo=Random.Range (1001,1004);
 			print ("reNo "+reNo);
 			PickItems(reNo);//得到一个id,就等于捡起了一个物品。
 

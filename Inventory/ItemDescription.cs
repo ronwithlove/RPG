@@ -21,8 +21,8 @@ public class ItemDescription : MonoBehaviour {
 		transform.position=UICamera.currentCamera.ScreenToWorldPoint(Input.mousePosition);//最好物品描述显示在这个物品格子的右下角再过去一点，这样不会被鼠标挡住
 		info=ItemsInfo._instance.GetItemInfoByID(itemId);
 		switch(info.type){//注意类型用的是枚举，所以注意case后面的类型，不是string哦
-		case  ItemType.Drug: ShowDrugDes();break; 
-		case ItemType.Equip: ShowEqupDes();break;
+		case  ItemType.Drug: desLabel.text=ShowDrugDes(info);break; 
+		case ItemType.Equip: desLabel.text=ShowEqupDes(info);break;
 		case ItemType.Mat: ShowMatDes();break;
 		}
 	}
@@ -32,17 +32,40 @@ public class ItemDescription : MonoBehaviour {
 	}
 
 	//不同类型返回不同的字段，比如装备就不会有回血什么
-	void ShowDrugDes(){
-		desLabel.text="物品："+info.name+"\n";
-		desLabel.text+="回血："+info.hp+"\n";
-		desLabel.text+="回魔："+info.mp+"\n";
-		desLabel.text+="出售："+info.price_sell+"金币"+"\n";
-		desLabel.text+="购买："+info.price_buy+"金币"+"\n";
+	string ShowDrugDes(ItemInfo info){
+		string str="";
+		str+="物品："+info.name+"\n";
+		str+="回血："+info.hp+"\n";
+		str+="回魔："+info.mp+"\n";
+		str+="出售："+info.price_sell+"金币"+"\n";
+		str+="购买："+info.price_buy+"金币"+"\n";
+		return str;
 	}
-	void ShowEqupDes(){
-		desLabel.text="物品："+info.name+"\n";
 
+	string ShowEqupDes(ItemInfo info){
+		string str="";
+		str+="物品："+info.name+"\n";
+		switch(info.equipType){
+		case EquipType.Headgear:str+="装备部位：头盔\n";break; //不要忘记break;
+		case EquipType.Armor:str+="装备部位：盔甲\n";break;
+		case EquipType.RightHand:str+="装备部位：右手\n";break;
+		case EquipType.LeftHand:str+="装备部位：左手\n";break;
+		case EquipType.Shoe:str+="装备部位：鞋子\n";break;
+		case EquipType.Accessory:str+="装备部位：饰品\n";break;
+		}
+		switch(info.classType){
+		case ClassType.Swordman:str+="适用职业：剑士\n";break;
+		case ClassType.Magician:str+="适用职业：法师\n";break;
+		case ClassType.Common:str+="适用职业：通用\n";break;
+		}
+		str+="力量："+info.strength+"\n";
+		str+="防御："+info.defence+"\n";
+		str+="速度："+info.speed+"\n";
+		str+="出售："+info.price_sell+"金币"+"\n";
+		str+="购买："+info.price_buy+"金币"+"\n";
+		return str;
 	}
+
 	void ShowMatDes(){
 		desLabel.text="物品："+info.name+"\n";
 
