@@ -9,11 +9,25 @@ public class GridItem : UIDragDropItem {//继承拖放
 	private InventoryItemGrid grid1;
 	private InventoryItemGrid grid2;
 	private int itemId=0;
+	private bool isOnHover=false;
 
 
 	void Awake(){
 		sprite=this.GetComponent<UISprite>();
 	}
+
+	void Update(){
+		if(isOnHover){
+			if(Input.GetMouseButtonDown(1)){//当鼠标移动物品上右键的时候
+				bool success=EquipmentUI._instance.EquipItem(itemId);//装备物品
+				if(success){//如果装备物品成功，	
+					transform.parent.GetComponent<InventoryItemGrid>().GridPlusItem(itemId,-1);//就在原来的格子中减去他
+				}
+			}//end if(Input.GetMouseButtonDown(1))
+		}//end if(isOnHover)
+	}
+
+
 	protected override void OnDragDropRelease(GameObject surface){//surface就是被拖动物品碰撞上的那个物品
 		base.OnDragDropRelease(surface);
 
@@ -66,11 +80,15 @@ public class GridItem : UIDragDropItem {//继承拖放
 		grid2.SetGridID(grid1Id,grid1Count);
 	}
 
-	public void OnHoverOver(){
-		ItemDescription._instance.ShowDes(itemId);
+	public void OnHoverOver(){//鼠标移到物品上
+		isOnHover=true;			
+		ItemDescription._instance.ShowDes(itemId);//显示物品信息
+
 	}
 	public void OnHoverOut(){
+		isOnHover=false;
 		ItemDescription._instance.HideDes();
+
 	}
 
 }

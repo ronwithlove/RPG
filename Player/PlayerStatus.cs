@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public enum PlayerClass{
+	Swordman,
+	Magican
+}
 public class PlayerStatus : MonoBehaviour {
 
 	public int lvl=1;
@@ -15,6 +19,8 @@ public class PlayerStatus : MonoBehaviour {
 	public int def_plus=0;
 	public int speed_plus=0;
 	public int remainPoints=0;
+
+	public PlayerClass playerClass=PlayerClass.Magican;
 
 	public void getCoins(int co){
 		coins+=co;

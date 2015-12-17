@@ -13,13 +13,20 @@ public class InventoryItemGrid : MonoBehaviour {
 		itemCountLabel=this.GetComponentInChildren<UILabel>();
 	}
 
-	public void GridPlusItem(int id, int count=1){//默认数量1
-		itemsID=id;
-		itemsCount=itemsCount+count;
-		itemCountLabel.text=""+itemsCount;
+	public void GridPlusItem(int id, int count=1){//默认数量1 把Grid加上某个物品和他的数量
+		if(itemsCount+count>=0){//排除如果是减成负数的情况。
+			itemsID=id;
+			itemsCount+=count;
+			itemCountLabel.text=""+itemsCount;
+			//下面是用来判断加-1的情况，也就是减物品
+			if(itemsCount==0){//格子里物品为0了，就初始化这个物品格子
+					SetGridID(0,0);//初始化要把itemsID 和itemsCount都设置为0；
+				GameObject.Destroy(this.transform.GetComponentInChildren<GridItem>().gameObject);//把自己下面的物件删除。
+			}
 		}
+	}
 
-	public void SetGridID(int id, int count=0){//默认数量0
+	public void SetGridID(int id, int count=0){//默认数量0  把Grid直接设置成某个物品，和他的数量
 		itemsID=id;
 		itemsCount=count;
 		if(itemsCount==0){
@@ -29,4 +36,5 @@ public class InventoryItemGrid : MonoBehaviour {
 		}
 	}
 
-	}
+
+}

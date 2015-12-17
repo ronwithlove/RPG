@@ -57,7 +57,7 @@ public class Inventory : MonoBehaviour {
 			if(firstBlankGridIdex!=1000){//不等于1000，说明有空的格子了，就放到这个格子下，
 				GameObject newItemGo= NGUITools.AddChild(itemGridList[firstBlankGridIdex].gameObject,gridItem); //就去创建这个捡起的物品	// 注意这个格式，这个意思就是添加一个子物件，那在这里相当于把物品放到格子里，第一个参数是父，第二个是子
 				newItemGo.transform.localPosition=Vector3.zero;
-				itemGridList[firstBlankGridIdex].GridPlusItem(id,itemCount);//把捡到物品的ID赋给空的格子（InventoryItemGrid）,数量先不写，为空就是默认1。
+				itemGridList[firstBlankGridIdex].GridPlusItem(id,itemCount);//把捡到物品的ID赋给空的格子（InventoryItemGrid）,数量为空就是默认1。
 				//把这个物品ID通过GridItem里的SETID方法给到GRID
 				newItemGo.transform.GetComponent<GridItem>().SetId(id);//通过用GetCompont方法获取newItemGo的物件GridItem,然后再用GridItem中的SetId方法，来改变Sprite名字，从而达到改变图标。
 			}else{
@@ -70,6 +70,8 @@ public class Inventory : MonoBehaviour {
 		}//if(gridIndex==0)结束
 
 	}
+
+
 
 	//背包打开关闭动画
 	public void BagShowHide(){

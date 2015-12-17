@@ -32,7 +32,6 @@ public class ItemInfo {//这个类不是 ItemsInfo，在 Item后少了个s哦。
 	public int mp;		//回魔值
 	public int price_sell;	//出售价
 	public int price_buy;	//购买价
-
 	public int strength;
 	public int defence;
 	public int speed;
