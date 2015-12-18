@@ -76,7 +76,6 @@ public class ItemsInfo : MonoBehaviour {
 			case "Drug": info.type=ItemType.Drug;break;//当得到的 str_type=Drug时,  info.type=ItemType.Drug。就不会有错了
 			case "Equip": info.type=ItemType.Equip;break;
 			case "Mat": info.type=ItemType.Mat;break; 
-			default:info.type=ItemType.Drug;break;//默认写着把。。。
 			}
 			//如果类型是Drug,继续获得接下来的属性
 			if(info.type==ItemType.Drug){
@@ -105,8 +104,6 @@ public class ItemsInfo : MonoBehaviour {
 				case "Magician":info.classType=ClassType.Magician;break;
 				case"Common":info.classType=ClassType.Common;break;
 				}
-
-
 			}
 			ItemInfoDict.Add (info.id,info);//最后把这个info加入字典，这里字典的id就用文本里的ID就可以了
 		}//foreach结束

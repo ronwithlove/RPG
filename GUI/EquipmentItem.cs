@@ -14,8 +14,7 @@ public class EquipmentItem : MonoBehaviour {
 	void Update(){
 		if(isOnHover){
 			if(Input.GetMouseButtonDown(1)){
-				Inventory._instance.PickItems(itemId);//包里多设成一个他这样的装备 ，注意这里没有判断如果包满的情况
-				GameObject.Destroy(this.gameObject);//把自己灭了
+				EquipmentUI._instance.RemoveItem(itemId,this.gameObject);
 			}
 		}
 	}

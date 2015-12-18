@@ -16,6 +16,10 @@ public class EquipmentUI : MonoBehaviour {
 	private GameObject accessoryGo;
 	private PlayerStatus playerStatus;
 
+	//装备上获得的属性，目前先设成private
+	private int strength=0;
+	private int defence=0;
+	private int speed=0;
 
 	void Awake(){		
 		_instance=this;
@@ -60,27 +64,49 @@ public class EquipmentUI : MonoBehaviour {
 		if(item==null){//说明这个部位上还没装备物品
 			GameObject newItemGo= NGUITools.AddChild(parent,equipItem); //创建物品，就是添加一个子物件，那在这里相当于把物品放到格子里，第一个参数是父，第二个是子
 			newItemGo.transform.localPosition=Vector3.zero;
-			newItemGo.transform.GetComponent<EquipmentItem>().SetId(info.id);//改图标
+			newItemGo.transform.GetComponent<EquipmentItem>().SetId(info.id);//改图标（
 		}else{//已经有物品了，更换物品
 			int equipeditemID=item.GetComponent<EquipmentItem>().itemId;
 			Inventory._instance.PickItems(equipeditemID,1);//在包里添加同样id的物件
 			item.GetComponent<EquipmentItem>().SetId(info.id);//把原来的物件改成装备上去的
 			//再从包里减去装备上的物件就OK了。这个放在GirdItem去做
 		}
-
+		UpdateProperty();//计算下所有装备带来的属性
 		return true;
 	}
 
+	public void RemoveItem(int id, GameObject Go){
+		Inventory._instance.PickItems( id);//包里多设成一个他这样的装备 ，注意这里没有判断如果包满的情况
+		GameObject.Destroy(Go);//把自己灭了
+		UpdateProperty();//计算下所有装备带来的属性,卸下装备的瞬间得到的属性还是未卸之前的，慢点看看要不要放到lateupdate去做。
+	}
 
+	void UpdateProperty(){//把所有属性装备加一遍
+		strength=0;//每次都是重新来一遍，都要设为0
+		defence=0;
+		speed=0;
+		EquipmentItem headItem=headGrearGo.GetComponentInChildren<EquipmentItem>();//这里可以用个数组或者用共有的类都可以
+		calcProperty(headItem);
+		EquipmentItem armorItem=armorGo.GetComponentInChildren<EquipmentItem>();
+		calcProperty(armorItem);
+		EquipmentItem rightHandItem=rightHandGo.GetComponentInChildren<EquipmentItem>();
+		calcProperty(rightHandItem);		
+		EquipmentItem leftHandItem=leftHandGo.GetComponentInChildren<EquipmentItem>();
+		calcProperty(leftHandItem);		
+		EquipmentItem shoeItem=shoeGo.GetComponentInChildren<EquipmentItem>();
+		calcProperty(shoeItem);		
+		EquipmentItem accessoryItem=accessoryGo.GetComponentInChildren<EquipmentItem>();
+		calcProperty(accessoryItem);
+	}
 
-
-
-
-
-
-
-
-
+	void calcProperty(EquipmentItem eqItem){
+		if(eqItem!=null){//不为空的时候计算，为空就是没有装备
+			ItemInfo info=ItemsInfo._instance.GetItemInfoByID(eqItem.itemId);
+			strength+=info.strength;
+			defence+=info.defence;
+			speed+=info.speed;
+		}
+	}
 
 
 	public void EquipmentShowHide(){

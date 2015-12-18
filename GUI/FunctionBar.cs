@@ -10,7 +10,7 @@ public class FunctionBar : MonoBehaviour {
 		Status._instance.StatusShowHide();
 	}
 	public void OnSkillBtnClick(){
-		
+		SkillUI._instance.SkillUIShowHide();
 	}
 	public void OnEquipBtnClick(){
 		EquipmentUI._instance.EquipmentShowHide();
