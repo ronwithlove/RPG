@@ -30,21 +30,31 @@ public class GridItem : UIDragDropItem {//继承拖放
 
 	protected override void OnDragDropRelease(GameObject surface){//surface就是被拖动物品碰撞上的那个物品
 		base.OnDragDropRelease(surface);
+		if (surface != null) {
+			if(surface.tag==Tags.inventory_grid){//如果是空的格子
+				ItemToGrid(this.transform, surface.transform);//把原来格子的信息放到新的格子去
 
-		if(surface.tag==Tags.inventory_grid){//如果是空的格子
-			ItemToGrid(this.transform, surface.transform);//把原来格子的信息放到新的格子去
+				this.transform.parent=surface.transform;//物品放置
+				this.transform.localPosition=Vector3.zero;
+			}else if(surface.tag==Tags.inventory_item){//如果格子中已经有物品，物品位置交换,把Grid1中的A和Grid2中的B交换
+				SwitchGrid(this.transform, surface.transform);//两个格子交换一下
 
-			this.transform.parent=surface.transform;//物品放置
-			this.transform.localPosition=Vector3.zero;
-		}else if(surface.tag==Tags.inventory_item){//如果格子中已经有物品，物品位置交换,把Grid1中的A和Grid2中的B交换
-			SwitchGrid(this.transform, surface.transform);//两个格子交换一下
+				Transform parent =surface.transform.parent;//保存Grid2位置
+				surface.transform.parent=this.transform.parent;//把B移到Grid1中
+				surface.transform.localPosition=Vector3.zero;//把B放在格子Grid1的中间
+				this.transform.parent=parent;//把A物品放到Grid2中
+				this.transform.localPosition=Vector3.zero;//把A放在格子Grid2中间
+			}else if(surface.tag==Tags.shortCut){
+				//调用shorcut,方法，要传个ID过去，item是没count的,count是ItemGrid中的属性
+				surface.GetComponent<ShortCut>().SetItem(itemId);
+				this.transform.localPosition=Vector3.zero;//这样在快捷键上设成之后，还要把他放回原来包中的位置。
+			}else{
+				this.transform.localPosition=Vector3.zero;//拖到别的什么东西时候放掉之后返回原处。
+			}
 
-			Transform parent =surface.transform.parent;//保存Grid2位置
-			surface.transform.parent=this.transform.parent;//把B移到Grid1中
-			surface.transform.localPosition=Vector3.zero;//把B放在格子Grid1的中间
-			this.transform.parent=parent;//把A物品放到Grid2中
-			this.transform.localPosition=Vector3.zero;//把A放在格子Grid2中间
-		}
+		}else{
+			this.transform.localPosition=Vector3.zero;//什么都没碰到的时候放掉之后返回原处。
+		}//end if (surface != null) else
 
 	}
 

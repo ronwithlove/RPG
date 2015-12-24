@@ -66,12 +66,46 @@ public class Inventory : MonoBehaviour {
 
 		}else{// gridIndex不为0，有找到相同的物品，叠加
 			invGridItem=itemGridList[gridIndex];//把这个格子给到gridItemGo
-			invGridItem.GridPlusItem(id,itemCount);//这里id又赋予了一次，其实之前已经检查过是一样的。
+			invGridItem.GridPlusItem(id,itemCount);//这里id又赋予了一次，其实之前已经检查过是一样的。其实是不用id的
 		}//if(gridIndex==0)结束
 
 	}
 
+	public bool useDrugItem(int id){//其实这里和上面加物品是可以放在一起的，加和减是一样的
+		int index=1000;//这里不能用0，因为Grid序号是从0开始的
+		foreach(InventoryItemGrid temp in itemGridList){
+			if(temp.itemsID==id){ 
+				index=itemGridList.IndexOf(temp);break;
+			}
+		}
+		if(index!=1000){
+			print ("inventory");
+			invGridItem=itemGridList[index];
+			invGridItem.GridPlusItem(id,-1);//这里是减一，
+			return true;
+		}else{
+			return false;
+		}
+	}
 
+	public int getGridindex(int id){//通过物品ID查找所在Grid 序号，（可以用来获得这个格子物品的数量）
+		int index=1000;
+		foreach(InventoryItemGrid temp in itemGridList){
+			if(temp.itemsID==id){ 
+				index=itemGridList.IndexOf(temp);break;
+			}
+		}
+		if(index!=1000){
+			return index;
+		}else{
+			return 1000;//返回1000说明没找到。Grid序号是从0开始的
+		}
+	}
+
+
+	public void getCoins(int co){ //金币放到这里来
+		coin+=co;
+	}
 
 	//背包打开关闭动画
 	public void BagShowHide(){

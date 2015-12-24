@@ -13,8 +13,6 @@ public class PlayerStatus : MonoBehaviour {
 	public int maxMP=100;
 	public float hp=100;//游戏时候的即时HP
 	public float mp=100;
-	public int coins=200;
-
 
 	public int strength=20;
 	public int defence=20;
@@ -26,9 +24,6 @@ public class PlayerStatus : MonoBehaviour {
 
 	public PlayerClass playerClass=PlayerClass.Magican;
 
-	public void getCoins(int co){
-		coins+=co;
-	}
 
 	public void StrengthPlusClick(){
 		if (remainPoints>0){
@@ -48,4 +43,10 @@ public class PlayerStatus : MonoBehaviour {
 			remainPoints--;
 		}
 	}
+
+	public void useDrug(int drugHP,int drugMP){
+		hp=Mathf.Min(hp+drugHP,maxHP);
+		mp=Mathf.Min(mp+drugMP,maxMP);
+	}
+
 }

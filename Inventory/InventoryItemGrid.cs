@@ -20,7 +20,7 @@ public class InventoryItemGrid : MonoBehaviour {
 			itemCountLabel.text=""+itemsCount;
 			//下面是用来判断加-1的情况，也就是减物品
 			if(itemsCount==0){//格子里物品为0了，就初始化这个物品格子
-					SetGridID(0,0);//初始化要把itemsID 和itemsCount都设置为0；
+				SetGridID(0,0);//初始化要把itemsID 和itemsCount都设置为0；
 				GameObject.Destroy(this.transform.GetComponentInChildren<GridItem>().gameObject);//把自己下面的物件删除。
 			}
 		}
@@ -35,6 +35,5 @@ public class InventoryItemGrid : MonoBehaviour {
 			itemCountLabel.text=""+count;
 		}
 	}
-
 
 }

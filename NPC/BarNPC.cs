@@ -49,7 +49,7 @@ public class BarNPC : NPC{
 		if(wolfKillcount>=10){
 			wolfKillcount=0;
 			onTask=false;
-			playerstatus.getCoins(1000);
+			Inventory._instance.getCoins(1000);
 			questTween.PlayReverse();
 		}else{
 			questTween.PlayReverse();

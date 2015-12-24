@@ -37,7 +37,7 @@ public class EquipmentUI : MonoBehaviour {
 	//装备物品
 	public bool EquipItem(int itemID){
 		ItemInfo info=ItemsInfo._instance.GetItemInfoByID(itemID);
-		if(info.type!=ItemType.Equip){
+		if(info.type==ItemType.Equip){
 			print ("it is not a equipment");
 			return false;
 		}
