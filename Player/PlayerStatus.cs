@@ -8,7 +8,7 @@ public enum PlayerClass{
 public class PlayerStatus : MonoBehaviour {
 
 	public int lvl=1;
-	public string playerName="施大大宝";
+	public string playerName="施大宝";
 	public int maxHP=100;
 	public int maxMP=100;
 	public float hp=100;//游戏时候的即时HP
