@@ -25,7 +25,7 @@ public enum ClassType{
 //这里都用了一个类，之后去完善，把不同种类的属性分开，比如装备，材料是不会回血回魔的
 public class ItemInfo {//这个类不是 ItemsInfo，在 Item后少了个s哦。
 	public int id;
-	public string name;
+	public string name;//技能名字
 	public string icon_name;//存储在图集中的名称
 	public ItemType type;//物品种类
 	public int hp;			//回血值
