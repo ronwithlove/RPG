@@ -24,7 +24,7 @@ public class PlayerMove : MonoBehaviour {
 	void Update () {
 		float distance=Vector3.Distance(playerDir.movePosition,transform.position);//注意格式 
 
-		if(distance>0.1){//这样有个bug,player有时会过了目标点，然后又继续往前进。
+		if(distance>0.1){
 			isMoving=true;
 			playerController.SimpleMove(transform.forward*speed);//注意格式 括号内的是移动方向
 			state=PlayerState.Move;//动画需要

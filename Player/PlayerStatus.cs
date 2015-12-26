@@ -13,7 +13,7 @@ public class PlayerStatus : MonoBehaviour {
 	public int maxMP=100;
 	public float hp=100;//游戏时候的即时HP
 	public float mp=100;
-	public float experience=0;
+	public float experience=0;//当前XP
 
 	public int strength=20;
 	public int defence=20;
