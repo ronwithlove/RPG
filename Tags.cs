@@ -9,6 +9,7 @@ public class Tags : MonoBehaviour {
 	public const string inventory_item="InventoryItem";
 	public const string shortCut="ShortCut";
 	public const string minimapCamera="MinimapCamera";
+	public const string enemy="Enemy";
 
 
 }

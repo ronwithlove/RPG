@@ -113,17 +113,17 @@ public class WolfBaby : MonoBehaviour {
 				if(value<attack2Rate){//攻击2
 					wolfAnim.CrossFade("WolfBaby-Attack2");
 					//造成伤害
-					if(attackTimer==attack2AniTime){
+					if(attackTimer>=attack2AniTime){ 
 						wolfAnim.CrossFade("WolfBaby-Idle");//动画时间结束就播放空闲动画
 					}
 				}else{//攻击1
 					wolfAnim.CrossFade("WolfBaby-Attack1");
 					//造成伤害
-					if(attackTimer==attack1AniTime){
+					if(attackTimer>=attack1AniTime){
 						wolfAnim.CrossFade("WolfBaby-Idle");//动画时间结束就播放空闲动画
 					}
 				}
-				if(attackTimer==attackRate){//攻击间隔，现在是设每隔1秒攻击一次
+				if(attackTimer>=attackRate){//攻击间隔，现在是设每隔1秒攻击一次
 					attackTimer=0;
 				}
 			}else if(distance>attackRange&& distance<=targetRange){//超出攻击范围，但是在目标范围内。
@@ -140,5 +140,12 @@ public class WolfBaby : MonoBehaviour {
 
 	void OnDestroy() {//MonoBehaviour的函数，当他将被销毁时，调用这个函数
 		GameObject.Destroy(HUDTextGo);
+	}
+
+	void OnMouseEnter(){//鼠标图标改变
+			CursorManager._instance.SetCursorAttack();
+	}
+	void OnMouseExit(){//鼠标移出 恢复默认鼠标
+		CursorManager._instance.SetCursorNormal();
 	}
 }
