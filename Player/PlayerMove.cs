@@ -34,6 +34,9 @@ public class PlayerMove : MonoBehaviour {
 				isMoving=false;//这里判断Player是否在移动，PlayerDir会得到这个值，通过他来判断是否要调整Player的朝向
 				state=PlayerState.Idle;
 			}
+		}else if(playerAttack.attStatus==PlayerAttackStatus.NormalAttack){
+			playerDir.movePosition=transform.position;
+			//这样写的目的是，主角遇到敌人之后前进至还有2米距离时候开始攻击，剩下的2米还没跑完，如果不写，敌人死了以后还会继续跑完。
 		}
 	}
 }

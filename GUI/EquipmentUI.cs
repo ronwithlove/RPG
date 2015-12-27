@@ -5,6 +5,10 @@ public class EquipmentUI : MonoBehaviour {
 	public static EquipmentUI _instance;
 
 	public GameObject equipItem;//手动把prefab拖过去
+	//装备上获得的属性
+	public int strength=0;
+	public int defence=0;
+	public int speed=0;
 
 	private TweenPosition equipmentTween;
 	private bool isequipmentOpen=false;//目前状态
@@ -16,10 +20,7 @@ public class EquipmentUI : MonoBehaviour {
 	private GameObject accessoryGo;
 	private PlayerStatus playerStatus;
 
-	//装备上获得的属性，目前先设成private
-	private int strength=0;
-	private int defence=0;
-	private int speed=0;
+
 
 	void Awake(){		
 		_instance=this;

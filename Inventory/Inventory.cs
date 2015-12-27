@@ -21,7 +21,6 @@ public class Inventory : MonoBehaviour {
 		inventoryTween=this.GetComponent<TweenPosition>();	
 		inventoryTween.gameObject.SetActive(false);
 		coinNumber.text=""+coin;
-
 	}
 
 	// Update is called once per frame
@@ -31,7 +30,6 @@ public class Inventory : MonoBehaviour {
 			//int reNo=Random.Range (1001,1004);
 			print ("reNo "+reNo);
 			PickItems(reNo);//得到一个id,就等于捡起了一个物品。
-
 			//现在默认先捡起物品数量是1
 		}
 	}

@@ -32,27 +32,24 @@ public class WolfBaby : MonoBehaviour {
 	private GameObject HUDTextGo;//新建后的HUDText
 	private Transform beFollowedTarget;
 	private Transform attackTarget;//小狼攻击对象
-
+	private GameObject minimapMark;
 
 	void Awake(){
 		wolfAnim=this.GetComponent<Animation>();
 		cc=this.GetComponent<CharacterController>();
 		normalColor=this.GetComponentInChildren<Renderer>().material.color;
 		beFollowedTarget=transform.Find("BeFollowedTarget");
+		minimapMark=transform.Find ("MinimapMark").gameObject;
 	}
 
 	void Start(){
 		HUDTextGo=NGUITools.AddChild(HUDTextContainer._instace.gameObject,HUDTextperfab);//NGUI中的物件避免用GameObject.Instantiate来创建一个实例
 		HUDTextGo.GetComponent<UIFollowTarget>().target=beFollowedTarget;//设置一下UI Follow Target下的属性
+		minimapMark.SetActive(false);
 		//只要赋值了target就好，Follow Target下的 Game Camera和 Ui Camera会自动找到的。
 	}
 
 	void Update(){
-
-		if(Input.GetMouseButtonDown(1)){
-			BeHit(1);
-		}
-
 		if(state==WolfState.Death){
 			wolfAnim.CrossFade("WolfBaby-Death");
 		}else if (state== WolfState.Attack){
@@ -75,7 +72,6 @@ public class WolfBaby : MonoBehaviour {
 				cc.SimpleMove(transform.forward*speed);
 			}
 		}// end 巡逻
-
 	}
 
 	public void BeHit(int damage){
@@ -83,13 +79,11 @@ public class WolfBaby : MonoBehaviour {
 			float value= Random.Range(0f,1f);
 			if(value<dodgeRate){//小狼没被打中
 				HUDTextGo.GetComponent<HUDText>().Add("Miss",Color.gray,1);
-				print ("没被打中");
 				print (HUDTextGo.GetComponent<HUDText>());
 			}else{//被打中了
 				HUDTextGo.GetComponent<HUDText>().Add(-damage,Color.red,1);
 				hp-=damage;
 				StartCoroutine(changeBodyColor());//被打中身体颜色变红 IEnumerator 配合StartCoroutine调用
-				print ("被打中");
 				if(hp<=0){
 					state=WolfState.Death;
 					GameObject.Destroy(this.gameObject,2f);
@@ -148,4 +142,9 @@ public class WolfBaby : MonoBehaviour {
 	void OnMouseExit(){//鼠标移出 恢复默认鼠标
 		CursorManager._instance.SetCursorNormal();
 	}
+
+	public void SetMinimapMark(){
+			minimapMark.SetActive(true);
+	}
+
 }

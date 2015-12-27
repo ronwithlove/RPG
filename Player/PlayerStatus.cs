@@ -15,10 +15,10 @@ public class PlayerStatus : MonoBehaviour {
 	public float mp=100;
 	public float experience=0;//当前XP
 
-	public int strength=20;
+	public int strength=20;//人物初始属性点
 	public int defence=20;
 	public int speed=20;
-	public int str_puls=0;
+	public int str_puls=0;//升级之后加的属性点
 	public int def_plus=0;
 	public int speed_plus=0;
 	public int remainPoints=0;
